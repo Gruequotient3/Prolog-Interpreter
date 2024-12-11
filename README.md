@@ -11,5 +11,7 @@ Git repository of my prolog interpreter projet in C
 
 ### Building :  
 #### Unix :
-`$ git clone https://github.com/Gruequotient3/Prolog-Interpreter.git` \
-`$ make`
+
+```bash
+git clone https://github.com/Gruequotient3/Prolog-Interpreter.git
+```
