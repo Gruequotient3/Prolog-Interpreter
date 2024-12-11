@@ -22,4 +22,4 @@ $(PROGNAME): $(OBJ)
 
 
 clean:
-	$(RM) *.o *~ $(PROGNAME)
+	$(RM) $(OBJ) $(PROGNAME)
