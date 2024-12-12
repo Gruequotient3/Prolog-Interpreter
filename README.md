@@ -4,10 +4,7 @@ Git repository of my prolog interpreter projet in C
 
 
 ### Features :
-- Parser
-    - Parser character
-    - Parser string
-
+- Parsing
 
 ### Building :  
 #### Unix :
