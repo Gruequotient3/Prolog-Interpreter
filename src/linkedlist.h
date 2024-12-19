@@ -12,26 +12,27 @@ struct llist_t{
 };
 
 struct llnode_t{
-    int data;
+    char* data;
     struct llnode_t* next;
 };
 
-
-
 llist* llNewList(llnode* node);
-llnode* llNewNode(int data);
+llnode* llNewNode(char* data);
 
 void llInsert(llist* list, llnode** pos, llnode* node);
 void llPushFront(llist* list, llnode* node);
 void llPushBack(llist* list, llnode* node);
 
 
-int llPopFront(llist* list);
-int llPopBack(llist* list);
+char* llPopFront(llist* list);
+char* llPopBack(llist* list);
 
 void llPrint(llist* list);
 
 
 void llClearNode(llnode* node);
 void llClearList(llist** l);
+
+
+
 #endif

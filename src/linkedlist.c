@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "linkedlist.h"
 
@@ -19,17 +20,17 @@ llist* llNewList(llnode* node){
     return list;
 }
 
-llnode* llNewNode(int data){
+llnode* llNewNode(char* data){
     llnode* node = (llnode*)malloc(sizeof(llnode));
     if (!node){
         printf("Error : Failed to initialize node in llNewNode\n");
         exit(1);
     }
-    node->data = data;
+    node->data = (char*)malloc(strlen(data)+1);
+    strcpy(node->data, data);
     node->next  = NULL;
     return node;
 }
-
 
 void llInsert(llist* list, llnode** pos, llnode* node){
     if (!list || !node){
@@ -60,26 +61,27 @@ void llPushBack(llist* list, llnode* node){
 }
 
 
-int llPopFront(llist* list){
+char* llPopFront(llist* list){
     if (!list || !list->first){
         printf("Error : Wrong argument can't extract empty list in llPopFront\n");
         exit(1);
     }
-    int n;
+    char* n;
     llnode* first = list->first;
-    n = first->data;
+    n = (char*)malloc(strlen(first->data)+1);
+    strcpy(n, first->data);
     list->first = first->next;
     first->next = NULL;
     llClearNode(first);
     return n;
 }
 
-int llPopBack(llist* list){
+char* llPopBack(llist* list){
     if (!list || !list->first){
         printf("Error : Wrong argument can't extract empty list in llPopBack\n");
         exit(1);
     }
-    int n;
+    char* n;
     llnode* node = list->first;
     if (list->first == list->last){
         n = node->data;
@@ -92,20 +94,19 @@ int llPopBack(llist* list){
         node = node->next;
     }
     node->next = NULL;
-    n = list->last->data;
+    n = (char*)malloc(strlen(list->last->data)+1);
+    strcpy(n, list->last->data);
     llClearNode(list->last);
     list->last = node;
     return n;
 }
-
-
 
 void llPrint(llist* list){
     if (!list)
         return;
     llnode* node = list->first;
     while (node){
-        printf("%d -> ", node->data);
+        printf("%s -> ", node->data);
         node = node->next;
     }
     printf("NULL\n");
@@ -117,6 +118,7 @@ void llClearNode(llnode* node){
     if (!node)
         return;
     llClearNode(node->next);
+    free(node->data);
     free(node);
 }
 
