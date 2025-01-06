@@ -56,7 +56,21 @@ char* parseChar(char* string, char c){
     return par;
 }
 
-
+/*
+ * Parsing that get the adress of after the character find between 2 ASCII value
+*/
+char* parseMultipleCharInterval(char* string, char c1, char c2){
+    if (!string){
+        printf("Error : Wrong argument (NULL string) in parseMultipleChar\n");
+        exit(1);
+    }
+    char* str = NULL;
+    while (!str && c1 <= c2){
+        str = parseChar(string, c1);
+        ++c1;
+    }
+    return str;
+}
 
 /*
  * Parsing that extract a string before the character in a string
