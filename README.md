@@ -20,5 +20,4 @@ make
 ./main
 ```
 
-#### Window 
-    Good luck !
+#### Window
