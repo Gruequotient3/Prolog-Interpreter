@@ -1,6 +1,6 @@
 # Prolog Interpreter
 
-    Git repository of my prolog interpreter projet in C
+Git repository of my prolog interpreter projet in C
 
 ### Features :
 - Parser
@@ -21,4 +21,4 @@ make
 ```
 
 #### Window
-    Good Luck
+Good Luck
