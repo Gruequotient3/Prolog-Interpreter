@@ -1,6 +1,6 @@
 # Prolog Interpreter
 
-Git repository of my prolog interpreter projet in C
+    Git repository of my prolog interpreter projet in C
 
 ### Features :
 - Parser
@@ -10,15 +10,15 @@ Git repository of my prolog interpreter projet in C
 - Linked List
 - Binary Tree
 
-### Building :  
-#### Unix :
+### Building  
+#### Unix
 
 ```zsh
-git clone https://github.com/Gruequotient3/Prolog-Interpreter.git
+git clone https://github.com/Gruequotient3/Prolog-Interpgit reter.git
 cd Prolog-Interpreter
 make
 ./main
 ```
 
-#### Window : 
-Good luck !
+#### Window 
+    Good luck !
