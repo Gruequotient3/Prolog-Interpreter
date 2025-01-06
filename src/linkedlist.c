@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "linkedlist.h"
+#include "errormacro.h"
 
 
 /*
@@ -14,13 +15,11 @@
 llist* llNewList(char* name, int arity, llnode* node){
     llist* list = (llist*)malloc(sizeof(llist));
     if (!list){
-        printf("Error : Failed to initialize list in llNewList\n");
-        exit(1);
+        FAILEDALLOCATEMEMORY("llNewList");
     }
     list->name = (char*)malloc(sizeof(char) * (strlen(name)+1));
     if (!list->name){
-        printf("Error : Failed to initialize list name in llNewList\n");
-        exit(1);
+        FAILEDALLOCATEMEMORY("llNewList");
     }
     strcpy(list->name, name);
     list->arity = arity;
@@ -35,8 +34,7 @@ llist* llNewList(char* name, int arity, llnode* node){
 llnode* llNewNode(char** data, int size){
     llnode* node = (llnode*)malloc(sizeof(llnode));
     if (!node){
-        printf("Error : Failed to initialize node in llNewNode\n");
-        exit(1);
+        FAILEDALLOCATEMEMORY("llNewNode");
     }
 
     node->data = (char**)malloc(sizeof(char*) * size);
@@ -54,8 +52,7 @@ llnode* llNewNode(char** data, int size){
 */
 void llInsert(llist* list, llnode** pos, llnode* node){
     if (!list || !node){
-        printf("Error : Wrong argument (NULL llist or llnode) in llInsert\n");
-        exit(1);
+        NULLARGUMENT("llInsert");
     }
 
     /*
@@ -92,8 +89,7 @@ void llPushBack(llist* list, llnode* node){
 */
 char** llPopFront(llist* list){
     if (!list || !list->first){
-        printf("Error : Wrong argument can't extract empty list in llPopFront\n");
-        exit(1);
+        NULLARGUMENT("llPopFront");
     }
     char** n;
     llnode* first = list->first;
@@ -113,8 +109,7 @@ char** llPopFront(llist* list){
 */
 char** llPopBack(llist* list){
     if (!list || !list->first){
-        printf("Error : Wrong argument can't extract empty list in llPopBack\n");
-        exit(1);
+        NULLARGUMENT("llPopBack");
     }
     char** n;
     llnode* node = list->first;
@@ -188,8 +183,7 @@ void llClearNode(llnode* node){
 */
 void llClearList(llist** list){
     if (!list){
-        printf("Error : Wrong argument (NULL llist) in llClearList\n");
-        exit(1);
+        NULLARGUMENT("llClearList");
     }
     llClearNode((*list)->first);
     free((*list)->name);
