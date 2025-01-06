@@ -21,8 +21,7 @@
 */
 int isKnowledge(char* string){
     if (!string){
-        printf("Error : Wrong argument (NULL string) in isKnowledge\n");
-        exit(1);
+        NULLARGUMENT("isKnowledge");
     }
 
     if (parseMultipleCharInterval(string, 'A', 'Z')
@@ -45,8 +44,7 @@ int isKnowledge(char* string){
 */
 int isStructureGood(char* string){
     if (!string){
-        printf("Error : Wrong argument (NULL string) in isStructureGood\n");
-        exit(1);
+        NULLARGUMENT("isStructureGood");
     }
 
     int nbParentheses = 0;
@@ -78,16 +76,13 @@ int isStructureGood(char* string){
 */
 llist* evalKnowledge(char* string, int line){
     if (!string){
-        printf("Error : Wrong argument (NULL string or llist) in evalKnowledge\n");
-        exit(1);
+        NULLARGUMENT("evalKnowledge");
     }
 
     // Get the knowledge's name
     char* name = parseCharExtractB(string, '(');
     if (!name){
-        printf("Error : Invalid syntax at line %d : \n", line);
-        printf("%s\n", string);
-        exit(1);
+        INVALIDSYNTAX(line, string);
     }
 
     // Get the parameters
@@ -95,9 +90,7 @@ llist* evalKnowledge(char* string, int line){
     char* parametersString = parseCharExtractB2(string, '(', ')');
     char* str = parametersString;
     if (!parametersString){
-        printf("Error : Invalid syntax at line %d : \n", line);
-        printf("%s\n", string);
-        exit(1);
+        INVALIDSYNTAX(line, string);
     }
 
     // Get the number of parameters
@@ -112,9 +105,7 @@ llist* evalKnowledge(char* string, int line){
     llist* knowledgeList = NULL;
     if (nbParameters == 1){
         if (!(*parametersString)){
-            printf("Error : Invalid syntax at line %d : \n", line);
-            printf("%s\n", string);
-            exit(1);
+            INVALIDSYNTAX(line, string);
         }
         parameters[0] = (char*)malloc(sizeof(char) * (strlen(parametersString)+1));
         strcpy(parameters[0], parametersString);
@@ -130,9 +121,7 @@ llist* evalKnowledge(char* string, int line){
                 strcpy(param, str);
             }
             if (!(*param)){
-                printf("Error : Invalid syntax at line %d : \n", line);
-                printf("%s\n", string);
-                exit(1);
+                INVALIDSYNTAX(line, string);
             }
             str = parseChar(str, ',');
             parameters[i] = (char*)malloc(sizeof(char) * (strlen(param)+1));

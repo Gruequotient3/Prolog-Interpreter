@@ -7,14 +7,14 @@
 #include <math.h>
 
 #include "parser.h"
+#include "errormacro.h"
 
 /*
  * Parsing that get the adress of the NULL character in a string
 */
 char* parseEOS (char* string, char c){
     if (!string){
-        printf("Error : Wrong argument (NULL string) in parseEOS\n");
-        exit(1);
+        NULLARGUMENT("parseEOS");
     }
 
     while (*string)
@@ -28,8 +28,7 @@ char* parseEOS (char* string, char c){
 */
 char* parseStartChar(char* string, char c){
     if (!string){
-        printf("Error : Wrong argument (NULL string) in parseStartChar\n");
-        exit(1);
+        NULLARGUMENT("parseStartChar");
     }
 
     if (*string == c)
@@ -42,8 +41,7 @@ char* parseStartChar(char* string, char c){
 */
 char* parseChar(char* string, char c){
     if (!string){
-        printf("Error : Wrong argument (NULL string) in parseChar\n");
-        exit(1);
+        NULLARGUMENT("parseChar");
     }
 
     if (!(*string))
@@ -61,8 +59,7 @@ char* parseChar(char* string, char c){
 */
 char* parseMultipleCharInterval(char* string, char c1, char c2){
     if (!string){
-        printf("Error : Wrong argument (NULL string) in parseMultipleChar\n");
-        exit(1);
+        NULLARGUMENT("parseMultipeCharInterval");
     }
     char* str = NULL;
     while (!str && c1 <= c2){
@@ -77,8 +74,7 @@ char* parseMultipleCharInterval(char* string, char c1, char c2){
 */
 char* parseCharExtractB(char* string, char c){
     if (!string){
-        printf("Error : Wrong argument (NULL string) in parseCharExtractB\n");
-        exit(1);
+        NULLARGUMENT("parseCharExtractB");
     }
 
     char* par = parseChar(string, c);
@@ -88,8 +84,7 @@ char* parseCharExtractB(char* string, char c){
     unsigned short nbChar = par - string;
     char* extract = (char*)malloc(sizeof(char) * nbChar + 1);
     if (!extract){
-        printf("Error : Failed to allocate memory in parseCharExtractB\n");
-        exit(1);
+        FAILEDALLOCATEMEMORY("parseCharExtractB");
     }
     for (int i = 0; i < nbChar; ++i){
         extract[i] = string[i];
@@ -103,8 +98,7 @@ char* parseCharExtractB(char* string, char c){
 */
 char* parseCharExtractA(char* string, char c){
     if (!string){
-        printf("Error : Wrong argument (NULL string) in parseCharExtractA\n");
-        exit(1);
+        NULLARGUMENT("parseCharExtractA");
     }
 
     char* par = parseChar(string, c);
@@ -114,8 +108,7 @@ char* parseCharExtractA(char* string, char c){
     unsigned short nbChar = eos - par;
     char* extract = (char*) malloc(sizeof(char) * nbChar+1);
     if (!extract){
-        printf("Error : Failed to allocate memory in parseCharExtractA\n");
-        exit(1);
+        FAILEDALLOCATEMEMORY("parseCharExtractA");
     }
     for (int i = 0; i < nbChar; ++i){
         extract[i] = par[i];
@@ -130,8 +123,7 @@ char* parseCharExtractA(char* string, char c){
 */
 char* parseCharExtractB2(char* string, char c1, char c2){
     if (!string){
-        printf("Error : Wrong argument (NULL string) in parseCharExtractB2\n");
-        exit(1);
+        NULLARGUMENT("parseCharExtractB2");
     }
 
     char* par1 = parseChar(string, c1);
@@ -143,8 +135,7 @@ char* parseCharExtractB2(char* string, char c1, char c2){
     short nbChar = par2 - par1;
     char* extract = (char*)malloc(sizeof(char) * nbChar + 1);
     if (!extract){
-        printf("Error : Failed to allocate memory in parseCharExtractB2\n");
-        exit(1);
+        FAILEDALLOCATEMEMORY("parseCharExtractB2");
     }
     for (int i = 0; i < nbChar; ++i){
         extract[i] = par1[i];
@@ -160,8 +151,7 @@ char* parseCharExtractB2(char* string, char c1, char c2){
 */
 char* parseStartString(char* string, char* parString){
     if (!string || !parString){
-        printf("Error : Wrong argument (NULL string) in parseStartString\n");
-        exit(1);
+        NULLARGUMENT("parseStartString");
     }
 
     if (!(*parString))
