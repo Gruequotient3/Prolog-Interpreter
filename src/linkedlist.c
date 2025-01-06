@@ -150,6 +150,8 @@ void llPrint(llist* list){
     if (!list)
         return;
     llnode* node = list->first;
+    printf("name : %s\n", list->name);
+    printf("arity : %d\n", list->arity);
     while (node){
         printf("(");
         for (int i = 0; i < node->size; ++i){
