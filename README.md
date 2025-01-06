@@ -2,9 +2,13 @@
 
 Git repository of my prolog interpreter projet in C
 
-
 ### Features :
-- Parsing
+- Parser
+- Analyser
+
+### Data Structure
+- Linked List
+- Binary Tree
 
 ### Building :  
 #### Unix :
