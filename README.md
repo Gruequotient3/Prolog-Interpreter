@@ -19,3 +19,6 @@ cd Prolog-Interpreter
 make
 ./main
 ```
+
+#### Window : 
+Good luck !
