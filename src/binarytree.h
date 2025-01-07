@@ -20,6 +20,8 @@ void btInsert(btnode** t, btelement* data);
 
 btnode** btFindOrderedPosition(btnode** t, btelement* data);
 
+btelement* btFind(btnode* tree, char* name, int arity);
+
 void btPostfixPrint(btnode* t);
 
 

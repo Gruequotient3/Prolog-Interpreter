@@ -2,11 +2,12 @@
 #define ANALYSER_H
 
 #include "linkedlist.h"
+#include "binarytree.h"
 
 int isKnowledge(char* string);
 int isStructureGood(char* string);
 
-llist* evalKnowledge(char* string, int line);
+void evalKnowledge(btnode** tree, char* string, int line);
 
 
 

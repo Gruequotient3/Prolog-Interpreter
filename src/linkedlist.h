@@ -26,12 +26,12 @@ void llInsert(llist* list, llnode** pos, llnode* node);
 void llPushFront(llist* list, llnode* node);
 void llPushBack(llist* list, llnode* node);
 
-
 char** llPopFront(llist* list);
 char** llPopBack(llist* list);
 
-void llPrint(llist* list);
+int llExist(llist* list, char** data, int size);
 
+void llPrint(llist* list);
 
 void llClearNode(llnode* node);
 void llClearList(llist** l);

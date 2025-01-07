@@ -9,8 +9,6 @@
 
 #include "analyser.h"
 #include "parser.h"
-#include "linkedlist.h"
-
 
 /*
   * Function that tell if a string is a knowledge
@@ -74,8 +72,8 @@ int isStructureGood(char* string){
  *      - parameters separated by comma
  *      - parameter not NULL
 */
-llist* evalKnowledge(char* string, int line){
-    if (!string){
+void evalKnowledge(btnode** tree, char* string, int line){
+    if (!string || !tree){
         NULLARGUMENT("evalKnowledge");
     }
 
@@ -129,8 +127,15 @@ llist* evalKnowledge(char* string, int line){
             free(param);
         }
     }
-    knowledgeList = llNewList(name, nbParameters, llNewNode(parameters, nbParameters));
 
+    knowledgeList = btFind(*tree, name, nbParameters);
+    if (!knowledgeList){
+        btInsert(tree, llNewList(name, nbParameters, llNewNode(parameters, nbParameters)));
+    }
+    else{
+        if (!llExist(knowledgeList, parameters, nbParameters))
+            llPushBack(knowledgeList, llNewNode(parameters, nbParameters));
+    }
     free(name);
     free(parametersString);
     for (int i = 0; i < nbParameters; ++i){
@@ -139,8 +144,6 @@ llist* evalKnowledge(char* string, int line){
         }
     }
     free(parameters);
-
-    return knowledgeList;
 }
 
 

@@ -139,6 +139,31 @@ char** llPopBack(llist* list){
 }
 
 /*
+ * Function that say if a value is already stored in the linked list
+ * return :
+ *      0 : false
+ *      1 : true
+*/
+int llExist(llist* list, char** data, int size){
+    if (!list){
+        return 0;
+    }
+    llnode* node = list->first;
+    int find = 0;
+    while(node && !find){
+        find = 1;
+        for (int i = 0; i < node->size && i < size; ++i){
+            if (strcmp(data[i], node->data[i])){
+                find = 0;
+                break;
+            }
+        }
+        node = node->next;
+    }
+    return find;
+}
+
+/*
  * Function that print all the value of each node in the linked list
 */
 void llPrint(llist* list){

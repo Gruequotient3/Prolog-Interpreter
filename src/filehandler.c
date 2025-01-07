@@ -5,6 +5,10 @@
 
 #include "filehandler.h"
 
+
+/*
+ * Function that open file and return FILE's pointer
+*/
 FILE* openFile(const char* path, const char* accessMode){
     FILE* file = fopen(path, accessMode);
     if (!file){
@@ -14,6 +18,9 @@ FILE* openFile(const char* path, const char* accessMode){
     return file;
 }
 
+/*
+ * Function that return the lenght of the line
+*/
 int getLineSize(FILE* file){
     int str;
     int pos = ftell(file);
@@ -23,6 +30,9 @@ int getLineSize(FILE* file){
     return endPos - pos;
 }
 
+/*
+ * Function that return a whole line
+*/
 char* getLine(FILE* file){
     int lineSize = getLineSize(file);
     char* str = (char*) malloc(lineSize);
@@ -30,6 +40,9 @@ char* getLine(FILE* file){
     return str;
 }
 
+/*
+ * Function that close a file
+*/
 void closeFile(FILE* file){
     fclose(file);
 }

@@ -8,6 +8,11 @@
 #include "binarytree.h"
 #include "errormacro.h"
 
+
+
+/*
+ * Function that create a new tree
+*/
 btnode* btNewTree(btelement* data, btnode* lchild, btnode* rchild){
     if (!data){
         NULLARGUMENT("btNewNode");
@@ -23,6 +28,9 @@ btnode* btNewTree(btelement* data, btnode* lchild, btnode* rchild){
     return node;
 }
 
+/*
+ * Function that create a new tree with NULL children
+*/
 btnode* btNewNode(btelement* data){
     return btNewTree(data, NULL, NULL);
 }
@@ -43,6 +51,10 @@ void btInsertNode(btnode** pos, btnode* newNode){
     }
 }
 
+/*
+ * Function that insert a node inside a tree
+ * Nodes are insert by BST insert
+*/
 void btInsert(btnode** t, btelement* data){
     if (!t && !data){
         NULLARGUMENT("btInsert");
@@ -52,6 +64,9 @@ void btInsert(btnode** t, btelement* data){
 
 }
 
+/*
+ * Function that find the node where to insert data
+*/
 btnode** btFindOrderedPosition(btnode** t, btelement* data){
     if(!t){
         NULLARGUMENT("btFindOrderedPosition");
@@ -64,6 +79,22 @@ btnode** btFindOrderedPosition(btnode** t, btelement* data){
     return btFindOrderedPosition(&(*t)->rchild, data);
 }
 
+/*
+ * Function that find the data in the tree equal to name and arity
+*/
+btelement* btFind(btnode* tree, char* name, int arity){
+    if (!tree)
+        return NULL;
+    if (tree->data->arity == arity && !strcmp(tree->data->name, name))
+        return tree->data;
+    if (tree->data->arity > arity)
+        return btFind(tree->lchild, name, arity);
+    return btFind(tree->rchild, name, arity);
+}
+
+/*
+ * Function that print the tree in postfix order
+*/
 void btPostfixPrint(btnode* t){
     if (!t)
         return;
@@ -72,6 +103,9 @@ void btPostfixPrint(btnode* t){
     llPrint(t->data);
 }
 
+/*
+ * Function that free the tree from memory
+*/
 void btClearTree(btnode** t){
     if (!t){
         NULLARGUMENT("btClearTree");
