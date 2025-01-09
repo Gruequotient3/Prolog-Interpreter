@@ -60,6 +60,17 @@ void vlInsert(vlist* list, vlnode** pos, vlnode* node){
     *pos = node;
 }
 
+void vlModify(vlnode** pos, char* newData){
+    if (!pos){
+        NULLARGUMENT("vlModify");
+    }
+    if (!*pos)
+        return;
+    free((*pos)->data);
+    (*pos)->data = (char*)malloc(sizeof(char) * (strlen(newData)+1));
+    strcpy((*pos)->data, newData);
+}
+
 /*
  * Function that insert a new node at the start of the linked list
 */
@@ -140,6 +151,21 @@ int vlExist(vlist* list, char* name){
     return 0;
 }
 
+vlnode* vlFind(vlist* list, char* name){
+    if (!list){
+        return NULL;
+    }
+    vlnode* node = list->first;
+    while (node){
+        if (!strcmp(node->name, name))
+            return node;
+        node = node->next;
+    }
+    return NULL;
+
+}
+
+
 /*
  * Function that print all the value of each node in the linked list
 */
@@ -151,7 +177,6 @@ void vlPrint(vlist* list){
         printf("%s -> %s\n", node->name, node->data);
         node = node->next;
     }
-    printf("NULL\n");
 
 }
 
@@ -175,6 +200,8 @@ void vlClearList(vlist** list){
     if (!list){
         NULLARGUMENT("vlClearList");
     }
+    if (!*list)
+        return;
     vlClearNode((*list)->first);
     free(*list);
     *list = NULL;

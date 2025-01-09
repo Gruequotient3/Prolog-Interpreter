@@ -19,6 +19,7 @@ vlist* vlNewList(vlnode* node);
 vlnode* vlNewNode(char* name, char* data);
 
 void vlInsert(vlist* list, vlnode** pos, vlnode* node);
+void vlModify(vlnode** pos, char* newData);
 void vlPushFront(vlist* list, vlnode* node);
 void vlPushBack(vlist* list, vlnode* node);
 
@@ -26,6 +27,7 @@ char* vlPopFront(vlist* list);
 char* vlPopBack(vlist* list);
 
 int vlExist(vlist* list, char* name);
+vlnode* vlFind(vlist* list, char* name);
 
 void vlPrint(vlist* list);
 
