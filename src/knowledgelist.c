@@ -184,7 +184,6 @@ void klPrint(klist* list){
         printf(")\n");
         node = node->next;
     }
-    printf("NULL\n");
 
 }
 
@@ -210,6 +209,8 @@ void klClearList(klist** list){
     if (!list){
         NULLARGUMENT("klClearList");
     }
+    if (!*list)
+        return;
     klClearNode((*list)->first);
     free((*list)->name);
     free(*list);

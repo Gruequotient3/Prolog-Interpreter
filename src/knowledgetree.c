@@ -101,6 +101,7 @@ void ktPostfixPrint(ktnode* t){
     ktPostfixPrint(t->lchild);
     ktPostfixPrint(t->rchild);
     klPrint(t->data);
+    printf("\n");
 }
 
 /*
