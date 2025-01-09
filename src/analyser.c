@@ -67,6 +67,13 @@ int isStructureGood(char* string){
 }
 
 
+int isVariable(char* string){
+    if (!string){
+        NULLARGUMENT("isVariable");
+    }
+    return (*string >= 65 && *string <= 90);
+}
+
 /*
  * Function that evaluate a knowledge expression
  * if the knowledge is write correctly then store it in linkedlist
@@ -148,8 +155,8 @@ void evalKnowledge(ktnode** tree, char* string, int line){
     free(parameters);
 }
 
-int evalQuestion(ktnode** tree, char* string){
-    if (!string || !tree){
+int evalQuestion(ktnode** tree, vlist** variables, char* string, vlist** result){
+    if (!string || !tree || !variables || !result){
         NULLARGUMENT("evalQuestion");
     }
 
@@ -159,8 +166,8 @@ int evalQuestion(ktnode** tree, char* string){
         INVALIDSYNTAXQ(string);
     }
 
-    // Get the parameters
     int nbParameters = 1;
+    // Get the parameters
     char* parametersString = parseCharExtractB2(string, '(', ')');
     char* str = parametersString;
     if (!parametersString){
@@ -204,18 +211,68 @@ int evalQuestion(ktnode** tree, char* string){
         }
     }
 
-    // Search in knwoledge if it exist
+    // Count and create each variables in the question
+    for (int i = 0; i < nbParameters; ++i){
+        if (isVariable(parameters[i])){
+            if (!*variables){
+                *variables = vlNewList(vlNewNode(parameters[i], ""));
+            }
+            else{
+                if (!vlExist(*variables, parameters[i]));
+                vlPushBack(*variables, vlNewNode(parameters[i], ""));
+            }
+        }
+    }
+
+    // Search in knowledge if it exist
     int question = 0;
     ktelement* node = ktFind(*tree, name, nbParameters);
     if (node){
         klnode* data = node->first;
-        while (data && !question){
-            question = 1;
-            for (int i = 0; i < data->size; i++){
-                if (strcmp(parameters[i], data->data[i]))
-                    question = 0;;
+        if (!*variables){
+            while (data && !question){
+                question = 1;
+                for (int i = 0; i < data->size; ++i){
+                    if (strcmp(parameters[i], data->data[i])){
+                        question = 0;
+                        break;
+                    }
+                }
+                data = data->next;
             }
-            data = data->next;
+        }
+        // If there is at least 1 variable
+        else{
+            while (data){
+                question = 1;
+                // Search trough all parameters
+                for (int i = 0; i < data->size; ++i){
+                    // If the parameter is a variable so we change it value
+                    // And continue to loop through other parameter
+                    if (isVariable(parameters[i])){
+                        vlnode* variable = vlFind(*variables, parameters[i]);
+                        vlModify(&variable, data->data[i]);
+                        continue;
+                    }
+                    if (strcmp(parameters[i], data->data[i])){
+                        question = 0;
+                        break;
+                    }
+                }
+                if (question){
+                    for (int i = 0; i < data->size; ++i){
+                        if (isVariable(parameters[i])){
+                            vlnode* variable = vlFind(*variables, parameters[i]);
+                            if (!*result){
+                                *result = vlNewList(vlNewNode(parameters[i], variable->data));
+                                continue;
+                            }
+                            vlPushBack(*result, vlNewNode(parameters[i], variable->data));
+                        }
+                    }
+                }
+                data = data->next;
+            }
         }
     }
     // Else it's a rule or didn't exist

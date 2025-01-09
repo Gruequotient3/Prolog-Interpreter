@@ -7,9 +7,10 @@
 
 int isKnowledge(char* string);
 int isStructureGood(char* string);
+int isVariable(char* string);
 
 void evalKnowledge(ktnode** tree, char* string, int line);
-int evalQuestion(ktnode** tree, char* string);
+int evalQuestion(ktnode** tree, vlist** variables, char* string, vlist** result);
 
 
 
