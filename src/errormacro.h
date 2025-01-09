@@ -8,6 +8,10 @@
     printf("%s\n", string);\
     exit(1);
 
+#define INVALIDSYNTAXQ(string) \
+    printf("Error : Invalid syntax\n");\
+    printf("%s\n", string);\
+    exit(1);
 
 #define NULLARGUMENT(functionName) \
     printf("Error : Wrong argument (NULL argument) in %s\n", functionName);\

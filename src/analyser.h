@@ -8,6 +8,7 @@ int isKnowledge(char* string);
 int isStructureGood(char* string);
 
 void evalKnowledge(btnode** tree, char* string, int line);
+int evalQuestion(btnode** tree, char* string);
 
 
 

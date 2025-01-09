@@ -46,13 +46,15 @@ int isStructureGood(char* string){
     }
 
     int nbParentheses = 0;
+    if (!*string)
+        return 0;
     while(*string++){
         if (*string == '(')
             ++nbParentheses;
         if (*string == ')')
             --nbParentheses;
 
-        if ((*string == '.') && (*(string+1)))
+        if ((*string == '.') && (*(string+1)) && (*(string+1)) != '\n')
             return 0;
 
         if (nbParentheses < 0)
@@ -100,7 +102,7 @@ void evalKnowledge(btnode** tree, char* string, int line){
         parameters[i] = NULL;
     }
 
-    llist* knowledgeList = NULL;
+    btelement* knowledgeList = NULL;
     if (nbParameters == 1){
         if (!(*parametersString)){
             INVALIDSYNTAX(line, string);
@@ -144,6 +146,87 @@ void evalKnowledge(btnode** tree, char* string, int line){
         }
     }
     free(parameters);
+}
+
+int evalQuestion(btnode** tree, char* string){
+    if (!string || !tree){
+        NULLARGUMENT("evalQuestion");
+    }
+
+    // Get requested knowledge name
+    char* name = parseCharExtractB(string, '(');
+    if (!name){
+        INVALIDSYNTAXQ(string);
+    }
+
+    // Get the parameters
+    int nbParameters = 1;
+    char* parametersString = parseCharExtractB2(string, '(', ')');
+    char* str = parametersString;
+    if (!parametersString){
+        INVALIDSYNTAXQ(string);
+    }
+
+    // Get the number of parameters
+    while (str = parseChar(str, ','))
+        ++nbParameters;
+
+    char** parameters = (char**)malloc(sizeof(char*) * nbParameters);
+    for (int  i = 0; i < nbParameters; ++i){
+        parameters[i] = NULL;
+    }
+
+    btelement* knowledgeList = NULL;
+    if (nbParameters == 1){
+        if (!(*parametersString)){
+            INVALIDSYNTAXQ(string);
+        }
+        parameters[0] = (char*)malloc(sizeof(char) * (strlen(parametersString)+1));
+        strcpy(parameters[0], parametersString);
+    }
+
+    else{
+        char* str = parametersString;
+        char* param = NULL;
+        for (int i = 0; i < nbParameters; ++i){
+            param = parseCharExtractB(str, ',');
+            if (!param){
+                param = (char*)malloc(sizeof(char) * (strlen(str)+1));
+                strcpy(param, str);
+            }
+            if (!(*param)){
+                INVALIDSYNTAXQ(string);
+            }
+            str = parseChar(str, ',');
+            parameters[i] = (char*)malloc(sizeof(char) * (strlen(param)+1));
+            strcpy(parameters[i], param);
+            free(param);
+        }
+    }
+
+    int question = 0;
+    btelement* node = btFind(*tree, name, nbParameters);
+    if (node){
+        llnode* data = node->first;
+        while (data && !question){
+            question = 1;
+            for (int i = 0; i < data->size; i++){
+                if (strcmp(parameters[i], data->data[i]))
+                    question = 0;;
+            }
+            data = data->next;
+        }
+    }
+
+    free(name);
+    free(parametersString);
+    for (int i = 0; i < nbParameters; ++i){
+        if (parameters[i]){
+            free(parameters[i]);
+        }
+    }
+    free(parameters);
+    return question;
 }
 
 
