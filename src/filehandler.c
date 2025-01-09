@@ -25,7 +25,7 @@ int getLineSize(FILE* file){
     int str;
     int pos = ftell(file);
     while ((str = fgetc(file)) != EOF && str != '\n');
-    int endPos = ftell(file);
+    int endPos = ftell(file) + 1;
     fseek(file, pos, SEEK_SET);
     return endPos - pos;
 }
