@@ -74,7 +74,7 @@ int isStructureGood(char* string){
  *      - parameters separated by comma
  *      - parameter not NULL
 */
-void evalKnowledge(btnode** tree, char* string, int line){
+void evalKnowledge(ktnode** tree, char* string, int line){
     if (!string || !tree){
         NULLARGUMENT("evalKnowledge");
     }
@@ -102,7 +102,7 @@ void evalKnowledge(btnode** tree, char* string, int line){
         parameters[i] = NULL;
     }
 
-    btelement* knowledgeList = NULL;
+    ktelement* knowledgeList = NULL;
     if (nbParameters == 1){
         if (!(*parametersString)){
             INVALIDSYNTAX(line, string);
@@ -130,13 +130,13 @@ void evalKnowledge(btnode** tree, char* string, int line){
         }
     }
 
-    knowledgeList = btFind(*tree, name, nbParameters);
+    knowledgeList = ktFind(*tree, name, nbParameters);
     if (!knowledgeList){
-        btInsert(tree, llNewList(name, nbParameters, llNewNode(parameters, nbParameters)));
+        ktInsert(tree, klNewList(name, nbParameters, klNewNode(parameters, nbParameters)));
     }
     else{
-        if (!llExist(knowledgeList, parameters, nbParameters))
-            llPushBack(knowledgeList, llNewNode(parameters, nbParameters));
+        if (!klExist(knowledgeList, parameters, nbParameters))
+            klPushBack(knowledgeList, klNewNode(parameters, nbParameters));
     }
     free(name);
     free(parametersString);
@@ -148,7 +148,7 @@ void evalKnowledge(btnode** tree, char* string, int line){
     free(parameters);
 }
 
-int evalQuestion(btnode** tree, char* string){
+int evalQuestion(ktnode** tree, char* string){
     if (!string || !tree){
         NULLARGUMENT("evalQuestion");
     }
@@ -176,7 +176,7 @@ int evalQuestion(btnode** tree, char* string){
         parameters[i] = NULL;
     }
 
-    btelement* knowledgeList = NULL;
+    ktelement* knowledgeList = NULL;
     if (nbParameters == 1){
         if (!(*parametersString)){
             INVALIDSYNTAXQ(string);
@@ -204,10 +204,11 @@ int evalQuestion(btnode** tree, char* string){
         }
     }
 
+    // Search in knwoledge if it exist
     int question = 0;
-    btelement* node = btFind(*tree, name, nbParameters);
+    ktelement* node = ktFind(*tree, name, nbParameters);
     if (node){
-        llnode* data = node->first;
+        klnode* data = node->first;
         while (data && !question){
             question = 1;
             for (int i = 0; i < data->size; i++){
@@ -217,6 +218,7 @@ int evalQuestion(btnode** tree, char* string){
             data = data->next;
         }
     }
+    // Else it's a rule or didn't exist
 
     free(name);
     free(parametersString);
