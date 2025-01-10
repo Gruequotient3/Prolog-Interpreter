@@ -13,7 +13,7 @@ Repos Git de mon projet d'interpreteur prolog en C
 ### Unix
 
 ```zsh
-git clone https://github.com/Gruequotient3/Prolog-Interpgit reter.git
+git clone https://github.com/Gruequotient3/Prolog-Interpreter.git
 cd Prolog-Interpreter
 make
 ./main fam.pl
